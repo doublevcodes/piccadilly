@@ -1,0 +1,31 @@
+{
+  "name": "piccadilly",
+  "version": "1.0.0",
+  "description": "Discord development utility bot",
+  "main": "dist/worker.js",
+  "author": "Vivaan Verma <hello@vivaanverma.com>",
+  "license": "MIT",
+  "scripts": {
+    "build": "webpack",
+    "dev": "NODE_ENV=development miniflare --watch --debug --build-watch-path src",
+    "publish:production": "NODE_ENV=production wrangler publish -e production",
+    "publish:staging": "NODE_ENV=staging wrangler publish -e staging",
+    "logs:production": "wrangler tail -e production",
+    "logs:staging": "wrangler tail -e staging",
+    "lint": "eslint \"{src/**/*,*}.js\"",
+    "lint:fix": "npm run lint -- --fix"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/doublevcodes/piccadilly.git"
+  },
+  "devDependencies": {
+    "@babel/core": "^7.15.8",
+    "@babel/plugin-proposal-optional-chaining": "^7.14.5",
+    "babel-loader": "^8.2.3",
+    "dotenv": "^10.0.0",
+    "eslint": "^8.1.0",
+    "webpack": "^5.60.0",
+    "webpack-cli": "^4.9.1"
+  }
+}

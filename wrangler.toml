@@ -1,0 +1,21 @@
+name = "piccadilly"
+type = "javascript"
+account_id = "f2d3b5a3c7632ca474f06db4717b00b2"
+workers_dev = true
+compatibility_date = "2021-10-25"
+
+[build]
+command = "npm run build"
+
+[build.upload]
+format = "service-worker"
+
+[env.staging]
+zone_id = "6518fc46e87bdf524f6362ba4baf5136"
+workers_dev = false
+route = "piccadilly-staging.doublev.codes/*"
+
+[env.production]
+zone_id = "6518fc46e87bdf524f6362ba4baf5136"
+workers_dev = false
+route = "piccadilly.doublev.codes/*"
