@@ -4,7 +4,7 @@ const env = require('dotenv').config({ path: path.join(__dirname, `${NODE_ENV}.e
 const { DefinePlugin } = require('webpack');
 const build = require('./src/build');
 
-console.log(`Using ${NODE_ENV} environment to build Piccadilly on Node v${process.versions.node}`);
+console.log(`⚙️  Using ${NODE_ENV} environment to build Piccadilly on Node v${process.versions.node}`);
 
 module.exports = {
     mode: 'none',

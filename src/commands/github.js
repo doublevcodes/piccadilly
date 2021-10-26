@@ -3,14 +3,14 @@ const { createEmbed } = require('../utils/embed');
 
 module.exports = {
     name: 'github',
-    description: 'Get a link to the open-source GitHub repository for DNS over Discord',
+    description: 'Get a link to the open-source GitHub repository for Piccadilly',
     execute: async ({ response }) => response({
         type: InteractionResponseType.ChannelMessageWithSource,
         data: {
             embeds: [
                 createEmbed(
                     'GitHub',
-                    'View the DNS over Discord source code on GitHub at https://dns-over-discord.v4.wtf/github',
+                    'View the Piccadilly source code on GitHub at https://git.vivaanverma.com/piccadilly/',
                 ),
             ],
         },

@@ -6,20 +6,28 @@ const { getCommands, registerCommands } = require('./commands');
 const mkdirSafe = path => fs.access(path).catch(() => fs.mkdir(path, { recursive: true }));
 
 module.exports = async () => {
-    const tmp = path.join('..', '..', 'tmp');
+    // Create the output directory
+    const tmp = path.join(__dirname, '..', '..', 'tmp');
     await mkdirSafe(tmp);
 
+    // Export empty commands as JSON
+    // This is so the help command doesn't error
     await fs.writeFile(path.join(tmp, 'commands.json'), JSON.stringify({}, null, 2));
 
+    // Get all our local commands
     const commands = getCommands();
 
+    // Register the commands with Discord
     const discordCommands = await registerCommands(commands);
 
+    // Export the Discord commands as JSON
+    // Mapped to be keyed by their API ID
     const discordCommandsObj = discordCommands.reduce((obj, cmd) => {
         obj[cmd.id] = cmd;
         return obj;
     }, {});
     await fs.writeFile(path.join(tmp, 'commands.json'), JSON.stringify(discordCommandsObj, null, 2));
 
-    console.log('Command data successfully generated');
+    // Done
+    console.log('Commands data ready to go!');
 };
