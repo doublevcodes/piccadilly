@@ -1,7 +1,7 @@
-const fs = require('fs')
-const path = require('path')
-const equal = require('fast-deep-equal')
-const { grantToken, getCommands, registerCommand, updateCommand, removeCommand } = require("../utils/discord")
+const fs = require('fs');
+const path = require('path');
+const equal = require('fast-deep-equal');
+const { grantToken, getCommands, registerCommand, updateCommand, removeCommand } = require('../utils/discord');
 
 const consistentCommandOption = obj => ({
     type: obj.type,
@@ -18,8 +18,8 @@ const updatedCommandProps = (newCmd, oldCmd) => ({
     description: oldCmd.description !== newCmd.description,
     options: !equal(
         oldCmd.options && oldCmd.options.map(consistentCommandOption),
-        newCmd.options && newCmd.options.map(consistentCommandOption)
-    )
+        newCmd.options && newCmd.options.map(consistentCommandOption),
+    ),
 });
 
 const updatedCommandPatch = (cmd, diff) => Object.keys(cmd)
@@ -32,16 +32,16 @@ const updatedCommandPatch = (cmd, diff) => Object.keys(cmd)
 module.exports.getCommands = () => {
     const commands = [];
 
-    const commandDirectory = path.join(__dirname, "..", "commands");
+    const commandDirectory = path.join(__dirname, '..', 'commands');
     const commandFiles = fs.readdirSync(commandDirectory);
 
     for (const commandFile of commandFiles) {
-        if (!commandFile.endsWith(".js")) continue;
+        if (!commandFile.endsWith('.js')) continue;
         const commandData = require(path.join(commandDirectory, commandFile));
 
 
-        if (!("name" in commandData)) continue;
-        if (!("execute" in commandData)) continue;
+        if (!('name' in commandData)) continue;
+        if (!('execute' in commandData)) continue;
 
         delete commandData.execute;
         commandData.file = commandFile;
@@ -50,23 +50,22 @@ module.exports.getCommands = () => {
     }
 
     return commands;
-}
+};
 
 module.exports.registerCommands = async commands => {
     const token = await grantToken();
-
     const discordCommands = await getCommands(process.env.CLIENT_ID, token.access_token, token.token_type, process.env.TEST_GUILD_ID);
 
     for (const command of discordCommands) {
         if (commands.find(cmd => cmd.name === command.name)) continue;
         await removeCommand(process.env.CLIENT_ID, token.access_token, token.token_type, command.id, process.env.TEST_GUILD_ID);
-        await new Promise(resolve => setTimeout(resolve, 250))
+        await new Promise(resolve => setTimeout(resolve, 250));
     }
 
     const commandData = [];
     for (const command of commands) {
         const discordCommand = discordCommands.find(cmd => cmd.name === command.name);
-        
+
         if (discordCommand) {
             const cmdDiff = updatedCommandProps(discordCommand, command);
 
@@ -88,4 +87,4 @@ module.exports.registerCommands = async commands => {
     }
 
     return commandData;
-}
+};

@@ -30,7 +30,6 @@
     "node-fetch": "^2.6.5"
   },
   "dependencies": {
-    "discord-api-types": "^0.24.0",
-    "workers-sentry": "^0.0.6"
+    "discord-api-types": "^0.24.0"
   }
 }

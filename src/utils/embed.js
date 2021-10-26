@@ -4,6 +4,6 @@ module.exports.createEmbed = (title, description, footer = '') => ({
     colour: 0xfea500,
     timestamp: (new Date).toISOString(),
     footer: footer ? {
-        text: footer
+        text: footer,
     } : null,
 });
